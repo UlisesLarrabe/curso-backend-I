@@ -1,11 +1,92 @@
 [
   {
     "id": 1,
-    "title": "Producto prueba",
-    "description": "Este es un producto prueba",
+    "title": "Fideos",
+    "description": "Fideos muy ricos",
+    "price": 200,
+    "thumbnail": "Sin imagen",
+    "code": "1212",
+    "stock": 25
+  },
+  {
+    "id": 2,
+    "title": "Pepsi",
+    "description": "Pepsi muy rica",
     "price": 200,
     "thumbnail": "Sin imagen",
     "code": "abc123",
+    "stock": 25
+  },
+  {
+    "id": 3,
+    "title": "Coca Cola",
+    "description": "Coca Cola muy rica",
+    "price": 200,
+    "thumbnail": "Sin imagen",
+    "code": "abc1233",
+    "stock": 25
+  },
+  {
+    "id": 4,
+    "title": "Agua",
+    "description": "Agua muy rica",
+    "price": 200,
+    "thumbnail": "Sin imagen",
+    "code": "abc1234",
+    "stock": 25
+  },
+  {
+    "id": 5,
+    "title": "Cafe",
+    "description": "Cafe muy rico",
+    "price": 200,
+    "thumbnail": "Sin imagen",
+    "code": "abc1235",
+    "stock": 25
+  },
+  {
+    "id": 6,
+    "title": "Chocolate",
+    "description": "Chocolate muy rico",
+    "price": 200,
+    "thumbnail": "Sin imagen",
+    "code": "abc1236",
+    "stock": 25
+  },
+  {
+    "id": 7,
+    "title": "Leche",
+    "description": "Leche muy rica",
+    "price": 200,
+    "thumbnail": "Sin imagen",
+    "code": "abc1237",
+    "stock": 25
+  },
+  {
+    "id": 8,
+    "title": "Pasta",
+    "description": "Pasta muy rica",
+    "price": 200,
+    "thumbnail": "Sin imagen",
+    "code": "abc1238",
+    "stock": 25
+  },
+  {
+    "id": 9,
+    "title": "Pan",
+    "description": "Pan muy rico",
+    "price": 200,
+    "thumbnail": "Sin imagen",
+    "code": "abc1239",
+    "stock": 25
+  },
+  {
+    "id": 10,
+    "title": "Queso",
+    "description": "Queso muy rico",
+    "price": 200,
+    "thumbnail": "Sin imagen",
+    "code": "abc12310",
     "stock": 25
   }
 ]
