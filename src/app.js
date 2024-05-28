@@ -116,15 +116,15 @@ const deleteProduct = async (id) => {
 };
 
 const app = express();
-const products = await getProducts();
 
-app.get("/products", (req, res) => {
+app.get("/products", async (req, res) => {
+  const products = await getProducts();
   const { limit } = req.query;
   if (limit) {
     const productsSliced = products.slice(0, limit);
-    res.send(productsSliced);
+    return res.send(productsSliced);
   }
-  res.send(products);
+  return res.send(products);
 });
 
 app.get("/products/:id", async (req, res) => {
