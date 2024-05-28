@@ -1,4 +1,4 @@
-const fs = require("fs").promises;
+import fs from "fs/promises";
 
 class ProductManager {
   static lastId = 0;
@@ -130,4 +130,92 @@ const deleteProduct = async (id) => {
 
 // updateProduct(2, { title: "Producto actualizado" });
 
-deleteProduct(2);
+addProduct({
+  title: "Fideos",
+  description: "Fideos muy ricos",
+  price: 200,
+  thumbnail: "Sin imagen",
+  code: "1212",
+  stock: 25,
+});
+
+addProduct({
+  title: "Pepsi",
+  description: "Pepsi muy rica",
+  price: 200,
+  thumbnail: "Sin imagen",
+  code: "abc123",
+  stock: 25,
+});
+
+addProduct({
+  title: "Coca Cola",
+  description: "Coca Cola muy rica",
+  price: 200,
+  thumbnail: "Sin imagen",
+  code: "abc1233",
+  stock: 25,
+});
+
+addProduct({
+  title: "Agua",
+  description: "Agua muy rica",
+  price: 200,
+  thumbnail: "Sin imagen",
+  code: "abc1234",
+  stock: 25,
+});
+
+addProduct({
+  title: "Cafe",
+  description: "Cafe muy rico",
+  price: 200,
+  thumbnail: "Sin imagen",
+  code: "abc1235",
+  stock: 25,
+});
+
+addProduct({
+  title: "Chocolate",
+  description: "Chocolate muy rico",
+  price: 200,
+  thumbnail: "Sin imagen",
+  code: "abc1236",
+  stock: 25,
+});
+
+addProduct({
+  title: "Leche",
+  description: "Leche muy rica",
+  price: 200,
+  thumbnail: "Sin imagen",
+  code: "abc1237",
+  stock: 25,
+});
+
+addProduct({
+  title: "Pasta",
+  description: "Pasta muy rica",
+  price: 200,
+  thumbnail: "Sin imagen",
+  code: "abc1238",
+  stock: 25,
+});
+
+addProduct({
+  title: "Pan",
+  description: "Pan muy rico",
+  price: 200,
+  thumbnail: "Sin imagen",
+  code: "abc1239",
+  stock: 25,
+});
+
+addProduct({
+  title: "Queso",
+  description: "Queso muy rico",
+  price: 200,
+  thumbnail: "Sin imagen",
+  code: "abc12310",
+  stock: 25,
+});
