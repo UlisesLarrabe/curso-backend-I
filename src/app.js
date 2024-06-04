@@ -116,7 +116,6 @@ const productManager = new ProductManager("./products.json");
 
 export const addProduct = async (product) => {
   const result = await productManager.addProduct(product);
-  console.log(result);
   return result;
 };
 
