@@ -1,5 +1,6 @@
 import express from "express";
 import fs from "fs/promises";
+import productsRouter from "./routes/products.router.js";
 
 class ProductManager {
   static lastId = 0;
@@ -14,18 +15,17 @@ class ProductManager {
     return response;
   }
 
-  async addProduct({ title, description, price, thumbnail, code, stock }) {
-    if (!title || !description || !price || !thumbnail || !code || !stock) {
-      console.error("Todos los campos son obligatorios");
-      return;
+  async addProduct(newProduct) {
+    const { title, description, price, thumbnail, code, stock } = newProduct;
+    if (!title || !description || !price || !code || !stock) {
+      return { status: false, message: "All fields are required" };
     }
 
     const isRepeated = this.products.some(
       (productRepeated) => productRepeated.code === code
     );
     if (isRepeated) {
-      console.error("El codigo del producto esta repetido");
-      return;
+      return { status: false, message: "The product's code is repeated" };
     }
     const product = {
       id: ++ProductManager.lastId,
@@ -38,6 +38,7 @@ class ProductManager {
     };
     this.products.push(product);
     await this.saveFile(this.products);
+    return { status: true, message: "Product added successfully" };
   }
 
   async getProductById(id) {
@@ -51,19 +52,33 @@ class ProductManager {
   }
 
   async updateProduct(id, data) {
-    const allProducts = await this.getProducts();
-    const productsUpdated = allProducts.map((product) =>
-      product.id === id ? { ...product, ...data, id: product.id } : product
-    );
-    await this.saveFile(productsUpdated);
-    return productsUpdated;
+    try {
+      const allProducts = await this.getProducts();
+      const isProductFound = allProducts.some((product) => product.id === id);
+      if (!isProductFound) throw new Error("Product not found");
+      const productsUpdated = allProducts.map((product) =>
+        product.id === id ? { ...product, ...data, id: product.id } : product
+      );
+      await this.saveFile(productsUpdated);
+      return { status: true, message: "Product updated successfully" };
+    } catch (error) {
+      return { status: false, message: "Product not found" };
+    }
   }
 
   async deleteProduct(id) {
-    const allProducts = await this.getProducts();
-    const productsUpdated = allProducts.filter((product) => product.id !== id);
-    await this.saveFile(productsUpdated);
-    return productsUpdated;
+    try {
+      const allProducts = await this.getProducts();
+      const isProductFound = allProducts.some((product) => product.id === id);
+      if (!isProductFound) throw new Error("Product not found");
+      const productsUpdated = allProducts.filter(
+        (product) => product.id !== id
+      );
+      await this.saveFile(productsUpdated);
+      return { status: true, message: "Product deleted successfully" };
+    } catch (error) {
+      return { status: false, message: "Product not found" };
+    }
   }
 
   async saveFile(array) {
@@ -87,51 +102,49 @@ class ProductManager {
 
 const productManager = new ProductManager("./products.json");
 
-const addProduct = async (product) => {
-  await productManager.addProduct(product);
+export const addProduct = async (product) => {
+  const result = await productManager.addProduct(product);
+  console.log(result);
+  return result;
 };
 
-const getProducts = async () => {
-  const products = await productManager.getProducts();
-  return products;
-};
-
-const getProductById = async (id) => {
-  const product = await productManager.getProductById(id);
-  if (product) {
-    return product;
-  } else {
-    return { error: "Producto no encontrado" };
+export const getProducts = async () => {
+  try {
+    const products = await productManager.getProducts();
+    return products;
+  } catch (e) {
+    console.log(e);
   }
 };
 
-const updateProduct = async (id, data) => {
-  const productsUpdated = await productManager.updateProduct(id, data);
-  console.log(productsUpdated);
+export const getProductById = async (id) => {
+  const product = await productManager.getProductById(id);
+  if (product) {
+    return { status: true, product };
+  } else {
+    return { status: false, error: "Producto no encontrado" };
+  }
 };
 
-const deleteProduct = async (id) => {
+export const updateProduct = async (id, data) => {
+  const productsUpdated = await productManager.updateProduct(id, data);
+  return productsUpdated;
+};
+
+export const deleteProduct = async (id) => {
   const productsUpdated = await productManager.deleteProduct(id);
-  console.log(productsUpdated);
+  return productsUpdated;
 };
 
 const app = express();
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
-app.get("/products", async (req, res) => {
-  const products = await getProducts();
-  const { limit } = req.query;
-  if (limit) {
-    const productsSliced = products.slice(0, limit);
-    return res.send(productsSliced);
-  }
-  return res.send(products);
-});
-
-app.get("/products/:id", async (req, res) => {
-  const { id } = req.params;
-  const product = await getProductById(parseInt(id));
-  res.send(product);
-});
+app.use("/api/products", productsRouter);
 
 app.listen(8080, () => {
   console.log("Escuchando en http://localhost:8080");
