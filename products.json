@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": 1,
+    "title": "Pepsi",
+    "description": "Pepsi muy rica",
+    "price": 250,
+    "thumbnail": "Sin imagen",
+    "code": "1234",
+    "stock": 25
+  }
+]

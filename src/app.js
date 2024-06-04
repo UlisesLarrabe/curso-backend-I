@@ -1,6 +1,18 @@
 import express from "express";
 import fs from "fs/promises";
 import productsRouter from "./routes/products.router.js";
+import cartsRouter from "./routes/carts.router.js";
+
+const app = express();
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+
+app.use("/api/products", productsRouter);
+app.use("/api/carts", cartsRouter);
 
 class ProductManager {
   static lastId = 0;
@@ -109,12 +121,8 @@ export const addProduct = async (product) => {
 };
 
 export const getProducts = async () => {
-  try {
-    const products = await productManager.getProducts();
-    return products;
-  } catch (e) {
-    console.log(e);
-  }
+  const products = await productManager.getProducts();
+  return { status: true, products };
 };
 
 export const getProductById = async (id) => {
@@ -136,15 +144,90 @@ export const deleteProduct = async (id) => {
   return productsUpdated;
 };
 
-const app = express();
-app.use(express.json());
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
+class CartManager {
+  static lastId = 0;
+  constructor(path) {
+    this.carts = [];
+    this.path = path;
+  }
 
-app.use("/api/products", productsRouter);
+  async addCart() {
+    const cart = {
+      id: ++CartManager.lastId,
+      products: [],
+    };
+    this.carts.push(cart);
+    await this.saveFile(this.carts);
+    return { status: true, message: "Cart created succesfully" };
+  }
+
+  async getCartById(id) {
+    const allCarts = await this.readFile();
+    const cart = allCarts.find((cart) => cart.id === id);
+    if (!cart)
+      return { status: false, message: `Cart with id ${id} not found` };
+    return { status: true, cart: cart };
+  }
+
+  async addProductToCartWithId(idCart, idProduct) {
+    const allCarts = await this.readFile();
+    const productIdExists = await productManager.getProductById(idProduct);
+    if (!productIdExists)
+      return { status: false, message: "Product not found" };
+    const addProduct = allCarts.map((cart) => {
+      if (cart.id === idCart) {
+        const product = cart.products.find(
+          (product) => product.id === idProduct
+        );
+        if (product) {
+          product.quantity++;
+        } else {
+          cart.products.push({ id: idProduct, quantity: 1 });
+        }
+      }
+      return cart;
+    });
+    await this.saveFile(addProduct);
+    return {
+      status: true,
+      message: "Product added to cart successfully",
+    };
+  }
+
+  async readFile() {
+    try {
+      const response = await fs.readFile(this.path, "utf-8");
+      const arrayResponse = JSON.parse(response);
+      return arrayResponse;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async saveFile(array) {
+    try {
+      await fs.writeFile(this.path, JSON.stringify(array, null, 2));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+const cartManager = new CartManager("./carts.json");
+
+export async function addCart() {
+  const response = await cartManager.addCart();
+  return response;
+}
+
+export async function getCartWithId(id) {
+  return await cartManager.getCartById(id);
+}
+
+export async function addProductToCartWithId(idCart, idProduct) {
+  const response = await cartManager.addProductToCartWithId(idCart, idProduct);
+  return response;
+}
 
 app.listen(8080, () => {
   console.log("Escuchando en http://localhost:8080");
