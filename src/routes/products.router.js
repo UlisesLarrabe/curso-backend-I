@@ -5,7 +5,7 @@ import {
   getProductById,
   getProducts,
   updateProduct,
-} from "../app.js";
+} from "../productManager.js";
 const router = Router();
 
 router.get("/", async (req, res) => {

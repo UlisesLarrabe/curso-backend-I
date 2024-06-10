@@ -5,7 +5,16 @@
     "description": "Pepsi muy rica",
     "price": 250,
     "thumbnail": "Sin imagen",
-    "code": "1234",
+    "code": "12314",
+    "stock": 25
+  },
+  {
+    "id": 2,
+    "title": "Pei",
+    "description": "Pepsi muy rica",
+    "price": 250,
+    "thumbnail": "Sin imagen",
+    "code": "123141",
     "stock": 25
   }
 ]
