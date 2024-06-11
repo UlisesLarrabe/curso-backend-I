@@ -1,20 +1,20 @@
 [
   {
     "id": 1,
-    "title": "Pepsi",
-    "description": "Pepsi muy rica",
-    "price": 250,
+    "title": "Mayonesa E",
+    "description": "No me gusta la mayo, menos PREMIUM",
+    "price": 25033,
     "thumbnail": "Sin imagen",
-    "code": "12314",
-    "stock": 25
+    "code": "13232111",
+    "stock": 251
   },
   {
     "id": 2,
-    "title": "Pei",
-    "description": "Pepsi muy rica",
-    "price": 250,
+    "title": "Mayonesa PREMIUM",
+    "description": "Aguante la mayooo",
+    "price": 25033,
     "thumbnail": "Sin imagen",
-    "code": "123141",
-    "stock": 25
+    "code": "1323211aaaa1",
+    "stock": 251
   }
 ]

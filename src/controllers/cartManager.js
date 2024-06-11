@@ -1,4 +1,5 @@
 import fs from "fs/promises";
+import { getProductById } from "./productManager.js";
 
 class CartManager {
   static lastId = 0;
@@ -26,9 +27,9 @@ class CartManager {
     return { status: true, cart: cart };
   }
 
-  async addProductToCartWithId(idCart, idProduct) {
+  async addProductToCartWithId(idCart, idProduct, quantity) {
     const allCarts = await this.readFile();
-    const productIdExists = await productManager.getProductById(idProduct);
+    const productIdExists = await getProductById(idProduct);
     if (!productIdExists)
       return { status: false, message: "Product not found" };
     const addProduct = allCarts.map((cart) => {
@@ -37,7 +38,7 @@ class CartManager {
           (product) => product.id === idProduct
         );
         if (product) {
-          product.quantity++;
+          product.quantity = product.quantity + quantity;
         } else {
           cart.products.push({ id: idProduct, quantity: 1 });
         }
@@ -81,7 +82,11 @@ export async function getCartWithId(id) {
   return await cartManager.getCartById(id);
 }
 
-export async function addProductToCartWithId(idCart, idProduct) {
-  const response = await cartManager.addProductToCartWithId(idCart, idProduct);
+export async function addProductToCartWithId(idCart, idProduct, quantity) {
+  const response = await cartManager.addProductToCartWithId(
+    idCart,
+    idProduct,
+    quantity
+  );
   return response;
 }

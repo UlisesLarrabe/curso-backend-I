@@ -21,9 +21,11 @@ router.get("/:cid", async (req, res) => {
 
 router.post("/:cid/product/:pid", async (req, res) => {
   const { cid, pid } = req.params;
+  const { quantity } = req.body;
   const { status, message } = await addProductToCartWithId(
     parseInt(cid),
-    parseInt(pid)
+    parseInt(pid),
+    quantity
   );
   if (status === false) return res.status(400).json({ status, error: message });
   return res.status(200).json({ status, message });
