@@ -98,7 +98,7 @@ class ProductManager {
   }
 }
 
-const productManager = new ProductManager("./products.json");
+const productManager = new ProductManager("./src/models/products.json");
 
 export const addProduct = async (product) => {
   const result = await productManager.addProduct(product);

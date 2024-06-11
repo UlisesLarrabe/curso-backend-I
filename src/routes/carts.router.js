@@ -3,7 +3,7 @@ import {
   addCart,
   addProductToCartWithId,
   getCartWithId,
-} from "../cartManager.js";
+} from "../controllers/cartManager.js";
 
 const router = Router();
 

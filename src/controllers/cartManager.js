@@ -70,7 +70,7 @@ class CartManager {
   }
 }
 
-const cartManager = new CartManager("./carts.json");
+const cartManager = new CartManager("./src/models/carts.json");
 
 export async function addCart() {
   const response = await cartManager.addCart();
