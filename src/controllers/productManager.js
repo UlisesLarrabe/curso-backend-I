@@ -128,3 +128,5 @@ export const deleteProduct = async (id) => {
   const productsUpdated = await productManager.deleteProduct(id);
   return productsUpdated;
 };
+
+export default ProductManager;

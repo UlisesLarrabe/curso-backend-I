@@ -1,0 +1,20 @@
+<h1>Todos los productos</h1>
+<section id="productsContainer">
+  {{#if products}}
+    {{#each products}}
+      <article class="cardProduct">
+        <h1>{{this.title}}</h1>
+        <p>{{this.description}}</p>
+        <div class="priceAndStock">
+          <p>${{this.price}}</p>
+          <p>Stock:{{this.stock}}</p>
+        </div>
+      </article>
+
+    {{/each}}
+
+  {{else}}
+    <h2>No hay productos para mostrar....</h2>
+  {{/if}}
+
+</section>

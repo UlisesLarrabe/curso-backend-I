@@ -1,20 +1,18 @@
 [
   {
-    "id": 1,
-    "title": "Mayonesa E",
-    "description": "No me gusta la mayo, menos PREMIUM",
-    "price": 25033,
-    "thumbnail": "Sin imagen",
-    "code": "13232111",
-    "stock": 251
+    "id": 3,
+    "title": "My hero academia",
+    "description": "Un chico sin poderes",
+    "price": "5900",
+    "code": "1235476",
+    "stock": "200"
   },
   {
-    "id": 2,
-    "title": "Mayonesa PREMIUM",
-    "description": "Aguante la mayooo",
-    "price": 25033,
-    "thumbnail": "Sin imagen",
-    "code": "1323211aaaa1",
-    "stock": 251
+    "id": 1,
+    "title": "Jujutsu kaisen",
+    "description": "Itadori vence a Sukuna",
+    "price": "2800",
+    "code": "12698",
+    "stock": "100"
   }
 ]
