@@ -30,7 +30,7 @@ class ProductManager {
       title,
       description,
       price,
-      thumbnail,
+      thumbnail: thumbnail ?? [],
       code,
       stock,
     };

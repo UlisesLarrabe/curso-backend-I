@@ -1,18 +1,20 @@
 [
   {
-    "id": 3,
-    "title": "My hero academia",
-    "description": "Un chico sin poderes",
-    "price": "5900",
-    "code": "1235476",
-    "stock": "200"
+    "id": 1,
+    "title": "Komi-san",
+    "description": "Komi cant communicate",
+    "price": 7200,
+    "thumbnail": [],
+    "code": "127abd",
+    "stock": 22
   },
   {
-    "id": 1,
-    "title": "Jujutsu kaisen",
-    "description": "Itadori vence a Sukuna",
-    "price": "2800",
-    "code": "12698",
-    "stock": "100"
+    "id": 2,
+    "title": "My hero academia",
+    "description": "Deku the greates hero of all time",
+    "price": 2200,
+    "thumbnail": [],
+    "code": "7abd",
+    "stock": 1
   }
 ]
