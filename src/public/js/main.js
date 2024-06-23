@@ -13,7 +13,7 @@ function renderProducts(products) {
     card.classList.add("cardProduct");
     card.innerHTML = `
       <h2>${product.title}</h2>
-      <p>${product.description}</p>
+      <p class="product-description">${product.description}</p>
       <div class='priceAndStock'>
       <p>Precio: ${product.price}</p>
       <p>Stock: ${product.stock}</p>
