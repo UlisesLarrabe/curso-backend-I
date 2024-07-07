@@ -1,7 +1,7 @@
 const socket = io();
 
 socket.on("products", (data) => {
-  renderProducts(data.products);
+  renderProducts(data);
 });
 
 function renderProducts(products) {
@@ -22,7 +22,7 @@ function renderProducts(products) {
     `;
     productsContainer.appendChild(card);
     card.querySelector("button").addEventListener("click", () => {
-      deleteProduct(product.id);
+      deleteProduct(product._id);
     });
   });
 }
@@ -43,8 +43,8 @@ function loadProduct() {
     stock: document.getElementById("stock").value,
     code: document.getElementById("code").value,
     status: document.getElementById("status").value,
-    thumbnails: document.getElementById("img").value || [],
-    category: document.getElementById("category").value || "true",
+    thumbnails: document.getElementById("img").value ?? [],
+    category: document.getElementById("category").value ?? "true",
   };
   socket.emit("addProduct", product);
 }

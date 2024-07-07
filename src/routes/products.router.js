@@ -1,57 +1,125 @@
 import { Router } from "express";
-import {
-  addProduct,
-  deleteProduct,
-  getProductById,
-  getProducts,
-  updateProduct,
-} from "../controllers/productManager.js";
+import ProductManager from "../dao/db/product-manager-db.js";
+
 const router = Router();
 
+const productManager = new ProductManager();
+
 router.get("/", async (req, res) => {
-  const products = await getProducts();
-  const { limit } = req.query;
-  if (limit) {
-    const productsSliced = products.slice(0, limit);
-    return res.status(200).send(productsSliced);
+  try {
+    const products = await productManager.getProducts();
+    const { limit } = req.query;
+    if (limit) {
+      const productsSliced = products.slice(0, limit);
+      return res.status(200).json({
+        status: "success",
+        payload: productsSliced,
+      });
+    }
+    return res.status(200).json({
+      status: "success",
+      payload: products,
+    });
+  } catch (error) {
+    res.json({
+      status: "error",
+      message: error,
+    });
   }
-  return res.status(200).send(products);
 });
 
 router.get("/:pid", async (req, res) => {
-  const { pid } = req.params;
-  const product = await getProductById(parseInt(pid));
-  res.send(product);
+  try {
+    const { pid } = req.params;
+    const product = await productManager.getProductById(pid);
+    if (!product) {
+      return res.status(404).json({
+        status: "error",
+        message: "Product not found",
+      });
+    }
+    res.json({
+      status: "success",
+      payload: product,
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: "error",
+      message: "Product not found",
+    });
+  }
 });
 
 router.post("/", async (req, res) => {
-  const { title, description, price, thumbnail, code, stock } = req.body;
-  const newProduct = { title, description, price, thumbnail, code, stock };
-  const { status, message } = await addProduct(newProduct);
-  if (status === false) return res.status(400).json({ status, error: message });
-  return res.status(201).send({ status, message });
+  try {
+    const { status, message, payload } = await productManager.addProduct(
+      req.body
+    );
+    if (status === "error") {
+      return res.status(400).json({
+        status,
+        message,
+      });
+    }
+    return res.status(201).json({
+      status,
+      message,
+      payload,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "error",
+      message: error,
+    });
+  }
 });
 
 router.put("/:pid", async (req, res) => {
-  const { pid } = req.params;
-  const productToUpdate = req.body;
-  const { status, message } = await updateProduct(
-    parseInt(pid),
-    productToUpdate
-  );
-  if (status === false) {
-    return res.status(400).json({ status, error: message });
+  try {
+    const { pid } = req.params;
+    console.log(req.body);
+    const { status, message } = await productManager.updateProduct(
+      pid,
+      req.body
+    );
+    if (status === "error") {
+      return res.status(400).json({
+        status,
+        message,
+      });
+    }
+    res.json({
+      status,
+      message,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "error",
+      message: error,
+    });
   }
-  return res.status(200).send({ status, message });
 });
 
 router.delete("/:pid", async (req, res) => {
-  const { pid } = req.params;
-  const { status, message } = await deleteProduct(parseInt(pid));
-  if (status === false) {
-    return res.status(400).json({ status, error: message });
+  try {
+    const { pid } = req.params;
+    const { status, message } = await productManager.deleteProduct(pid);
+    if (status === "error") {
+      return res.status(400).json({
+        status,
+        message,
+      });
+    }
+    res.status(200).json({
+      status,
+      message,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "error",
+      error: error,
+    });
   }
-  return res.status(200).send({ status, message });
 });
 
 export default router;
