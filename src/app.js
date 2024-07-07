@@ -4,11 +4,8 @@ import cartsRouter from "./routes/carts.router.js";
 import exphbs from "express-handlebars";
 import { Server } from "socket.io";
 import viewsRouter from "./routes/views.router.js";
-import {
-  addProduct,
-  deleteProduct,
-  getProducts,
-} from "./controllers/productManager.js";
+import "./database.js";
+import ProductManager from "./dao/db/product-manager-db.js";
 
 const app = express();
 app.use(express.json());
@@ -27,19 +24,21 @@ app.use("/api/carts", cartsRouter);
 app.use("/", viewsRouter);
 
 const httpServer = app.listen(8080, () => {
-  console.log("Escuchando en http://localhost:8080");
+  console.log("Listening in http://localhost:8080");
 });
+
+const productManager = new ProductManager();
 
 const io = new Server(httpServer);
 io.on("connection", async (socket) => {
   console.log("Client connected");
-  socket.emit("products", await getProducts());
+  socket.emit("products", await productManager.getProducts());
   socket.on("deleteProduct", async (id) => {
-    await deleteProduct(id);
-    io.sockets.emit("products", await getProducts());
+    await productManager.deleteProduct(id);
+    io.sockets.emit("products", await productManager.getProducts());
   });
   socket.on("addProduct", async (product) => {
-    await addProduct(product);
-    io.sockets.emit("products", await getProducts());
+    await productManager.addProduct(product);
+    io.sockets.emit("products", await productManager.getProducts());
   });
 });
