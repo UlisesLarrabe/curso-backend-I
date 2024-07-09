@@ -1,12 +1,22 @@
 import ProductModel from "../models/product.model.js";
 
 class ProductManager {
-  async getProducts() {
+  async getProducts(category, limit, page, sort) {
     try {
-      const response = await ProductModel.find().lean();
-      return response;
+      const query = category ? { category: category.toLowerCase() } : {};
+      const options = {
+        limit,
+        page,
+        sort: sort ? { price: sort } : {},
+      };
+      const response = await ProductModel.paginate(query, options);
+      let arrayDocs = response.docs.map((product) => {
+        const { _id, ...rest } = product;
+        return rest;
+      });
+      return { docs: arrayDocs, ...response };
     } catch (error) {
-      return error;
+      throw new Error(error);
     }
   }
 
@@ -23,6 +33,7 @@ class ProductManager {
         status,
         category,
       } = newProduct;
+      console.log(newProduct);
       if (
         !title ||
         !description ||
@@ -33,21 +44,16 @@ class ProductManager {
         !status ||
         !category
       ) {
-        return {
-          status: "error",
-          message: "All fields are required",
-        };
+        throw new Error("All fields are necessary");
       }
-      const allProducts = await this.getProducts();
+      const { docs: allProducts } = await this.getProducts();
+      console.log(allProducts);
       const isRepeated = allProducts.some(
         (productRepeated) => productRepeated.code === code
       );
 
       if (isRepeated) {
-        return {
-          status: "error",
-          message: "The product's code must be unique",
-        };
+        throw new Error("Product already exists");
       }
       const product = new ProductModel({
         title,
@@ -78,7 +84,7 @@ class ProductManager {
     try {
       const product = ProductModel.findById(id);
       if (!product) {
-        return null;
+        throw new Error("Product not found");
       }
       return product;
     } catch (error) {

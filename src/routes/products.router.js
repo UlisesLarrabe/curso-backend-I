@@ -7,15 +7,16 @@ const productManager = new ProductManager();
 
 router.get("/", async (req, res) => {
   try {
-    const products = await productManager.getProducts();
-    const { limit } = req.query;
-    if (limit) {
-      const productsSliced = products.slice(0, limit);
-      return res.status(200).json({
-        status: "success",
-        payload: productsSliced,
-      });
-    }
+    const limit = req.query.limit || 10;
+    const page = req.query.page || 1;
+    const category = req.query.category;
+    const sort = req.query.sort;
+    const products = await productManager.getProducts(
+      category,
+      limit,
+      page,
+      parseInt(sort)
+    );
     return res.status(200).json({
       status: "success",
       payload: products,
@@ -32,12 +33,6 @@ router.get("/:pid", async (req, res) => {
   try {
     const { pid } = req.params;
     const product = await productManager.getProductById(pid);
-    if (!product) {
-      return res.status(404).json({
-        status: "error",
-        message: "Product not found",
-      });
-    }
     res.json({
       status: "success",
       payload: product,
@@ -55,12 +50,6 @@ router.post("/", async (req, res) => {
     const { status, message, payload } = await productManager.addProduct(
       req.body
     );
-    if (status === "error") {
-      return res.status(400).json({
-        status,
-        message,
-      });
-    }
     return res.status(201).json({
       status,
       message,

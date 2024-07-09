@@ -3,11 +3,11 @@
   {{#if products}}
     {{#each products}}
       <article class="cardProduct">
-        <h1>{{this.title}}</h1>
-        <p>{{this.description}}</p>
+        <h1>{{this._doc.title}}</h1>
+        <p>{{this._doc.description}}</p>
         <div class="priceAndStock">
-          <p>${{this.price}}</p>
-          <p>Stock:{{this.stock}}</p>
+          <p>${{this._doc.price}}</p>
+          <p>Stock:{{this._doc.stock}}</p>
         </div>
       </article>
 
@@ -18,3 +18,17 @@
   {{/if}}
 
 </section>
+
+<footer>
+  {{#if hasPrevPage}}
+    <a href="/home?page={{prevPage}}">Volver</a>
+  {{/if}}
+
+  <span class="current-page">
+    {{currentPage}}
+  </span>
+
+  {{#if hasNextPage}}
+    <a href="/home?page={{nextPage}}">Siguiente</a>
+  {{/if}}
+</footer>

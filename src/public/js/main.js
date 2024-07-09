@@ -43,8 +43,9 @@ function loadProduct() {
     stock: document.getElementById("stock").value,
     code: document.getElementById("code").value,
     status: document.getElementById("status").value,
-    thumbnails: document.getElementById("img").value ?? [],
-    category: document.getElementById("category").value ?? "true",
+    img: document.getElementById("img").value,
+    category: document.getElementById("category").value,
+    thumbnails: [],
   };
   socket.emit("addProduct", product);
 }

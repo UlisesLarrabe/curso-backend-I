@@ -47,3 +47,21 @@ input {
   color: gray;
   font-weight: 100;
 }
+
+footer {
+  display: flex;
+  gap: 20px;
+  padding: 10px;
+  font-size: 20px;
+  font-family: "Courier New", Courier, monospace;
+  justify-content: center;
+  align-items: center;
+}
+
+.current-page {
+  font-weight: bold;
+}
+
+a {
+  min-width: 50px;
+}

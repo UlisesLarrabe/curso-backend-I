@@ -31,14 +31,16 @@ const productManager = new ProductManager();
 
 const io = new Server(httpServer);
 io.on("connection", async (socket) => {
-  console.log("Client connected");
-  socket.emit("products", await productManager.getProducts());
+  const products = await productManager.getProducts();
+  socket.emit("products", products.docs);
   socket.on("deleteProduct", async (id) => {
     await productManager.deleteProduct(id);
-    io.sockets.emit("products", await productManager.getProducts());
+    const products = await productManager.getProducts();
+    io.sockets.emit("products", products.docs);
   });
   socket.on("addProduct", async (product) => {
     await productManager.addProduct(product);
-    io.sockets.emit("products", await productManager.getProducts());
+    const products = await productManager.getProducts();
+    io.sockets.emit("products", products.docs);
   });
 });
