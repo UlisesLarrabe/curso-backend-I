@@ -19,7 +19,6 @@ router.get("/home", async (req, res) => {
     page,
     sort
   );
-  console.log(response);
   let arrayDocs = response.docs.map((product) => {
     const { _id, ...rest } = product;
     return rest;
