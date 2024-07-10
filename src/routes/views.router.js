@@ -1,8 +1,10 @@
 import { Router } from "express";
 import ProductManager from "../dao/db/product-manager-db.js";
+import CartManager from "../dao/db/cart-manager-db.js";
 
 const router = Router();
 const productManager = new ProductManager();
+const cartManager = new CartManager();
 
 router.get("/realtimeproducts", async (req, res) => {
   res.render("realTimeProducts");
@@ -21,7 +23,8 @@ router.get("/home", async (req, res) => {
   );
   let arrayDocs = response.docs.map((product) => {
     const { _id, ...rest } = product;
-    return rest;
+    const newId = _id.toString();
+    return { newId, ...rest };
   });
   res.render("home", {
     products: arrayDocs,
@@ -31,6 +34,11 @@ router.get("/home", async (req, res) => {
     nextPage: response.nextPage,
     currentPage: response.page,
   });
+});
+
+router.get("/carts/:cid", async (req, res) => {
+  const response = await cartManager.getCartById(req.params.cid);
+  res.render("cart", { products: response.payload.products });
 });
 
 export default router;

@@ -66,7 +66,6 @@ router.post("/", async (req, res) => {
 router.put("/:pid", async (req, res) => {
   try {
     const { pid } = req.params;
-    console.log(req.body);
     const { status, message } = await productManager.updateProduct(
       pid,
       req.body

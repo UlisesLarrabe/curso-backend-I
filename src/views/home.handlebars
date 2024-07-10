@@ -2,13 +2,15 @@
 <section id="productsContainer">
   {{#if products}}
     {{#each products}}
-      <article class="cardProduct">
+      <article class="cardProduct" data-id={{this.newId}}>
         <h1>{{this._doc.title}}</h1>
-        <p>{{this._doc.description}}</p>
+        <p class="product-description">{{this._doc.description}}</p>
         <div class="priceAndStock">
           <p>${{this._doc.price}}</p>
           <p>Stock:{{this._doc.stock}}</p>
         </div>
+        <button class="btn-card" id="btn-card" data-id={{this.newId}}>Agregar al
+          carrito</button>
       </article>
 
     {{/each}}
@@ -32,3 +34,5 @@
     <a href="/home?page={{nextPage}}">Siguiente</a>
   {{/if}}
 </footer>
+
+<script src="js/home.js"></script>

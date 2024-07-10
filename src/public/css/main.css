@@ -16,8 +16,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 200px;
-  background-color: #d8efd3;
+  background-color: #f9f9f9;
   border-radius: 10%;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   padding: 10px;
@@ -44,7 +45,7 @@ input {
 .product-description {
   font-size: 12px;
   text-align: center;
-  color: gray;
+  color: rgb(174, 174, 174);
   font-weight: 100;
 }
 
@@ -64,4 +65,14 @@ footer {
 
 a {
   min-width: 50px;
+}
+
+.btn-card {
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  background-color: rgb(254, 19, 19);
+  color: white;
+  border: none;
+  cursor: pointer;
 }

@@ -47,7 +47,6 @@ class ProductManager {
         throw new Error("All fields are necessary");
       }
       const { docs: allProducts } = await this.getProducts();
-      console.log(allProducts);
       const isRepeated = allProducts.some(
         (productRepeated) => productRepeated.code === code
       );
