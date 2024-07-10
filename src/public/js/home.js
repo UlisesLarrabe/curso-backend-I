@@ -21,7 +21,13 @@ document.addEventListener("DOMContentLoaded", function () {
       fetch(url, options)
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
+          Toastify({
+            text: "Se ha agregado al carrito",
+            offset: {
+              x: 50,
+              y: 10,
+            },
+          }).showToast();
         })
         .catch((error) => {
           console.error("Error:", error);
