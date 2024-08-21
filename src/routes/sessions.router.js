@@ -49,4 +49,14 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/logout", (req, res) => {
+  req.session.destroy((error) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.send("Sesion destruida");
+    }
+  });
+});
+
 export default router;
