@@ -36,8 +36,6 @@ router.get("/home", isLogged, async (req, res) => {
   const username = req.session.user.first_name;
   const isAdmin = req.session.user.role === "admin";
 
-  console.log(isAdmin);
-
   res.render("home", {
     products: arrayDocs,
     hasPrevPage: response.hasPrevPage,
