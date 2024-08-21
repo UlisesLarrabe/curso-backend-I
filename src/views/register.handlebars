@@ -1,0 +1,73 @@
+<section class="w-[300px] h-full flex flex-col justify-center">
+  <h1 class="text-center mb-10 text-xl font-bold">Regístrate aquí</h1>
+  <form
+    action=""
+    class="flex flex-col gap-5 bg-[#4E31AA] p-2 rounded-sm text-white"
+  >
+    <label for="first_name" class="flex flex-col">
+      Nombre
+      <input
+        type="text"
+        name="first_name"
+        id="first_name"
+        placeholder="Ej:Juan"
+        class="p-2 rounded-sm text-black"
+      />
+    </label>
+    <label for="last_name" class="flex flex-col">
+      Apellido
+      <input
+        type="text"
+        name="last_name"
+        id="last_name"
+        placeholder="Ej:Perez"
+        class="p-2 rounded-sm text-black"
+      />
+    </label>
+    <label for="email" class="flex flex-col">
+      Email
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Ej:ejemplo@email.com"
+        class="p-2 rounded-sm text-black"
+      />
+    </label>
+    <label for="age" class="flex flex-col">
+      Edad
+      <input
+        type="number"
+        name="age"
+        id="age"
+        placeholder="Ej:20"
+        class="p-2 rounded-sm text-black"
+      />
+    </label>
+    <label for="password" class="flex flex-col">
+      Contraseña
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Contraseña"
+        class="p-2 rounded-sm text-black"
+      />
+    </label>
+
+    <button
+      type="submit"
+      id="btnRegister"
+      class="p-2 bg-[#EBD3F8] text-black font-bold rounded-sm"
+    >Registrarse</button>
+  </form>
+  <a href="/login" class="text-[blue]">¿Quieres iniciar sesion?</a>
+</section>
+
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/toastify-js"
+></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+<script src="js/register.js"></script>
