@@ -36,6 +36,7 @@ router.post("/login", async (req, res) => {
         last_name: response.user.last_name,
         email: response.user.email,
         age: response.user.age,
+        role: response.user.role,
       };
       req.session.user = userInfo;
       req.session.isLog = true;
