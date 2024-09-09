@@ -1,5 +1,6 @@
 import { Router } from "express";
 import SessionManager from "../dao/db/session-manager.js";
+import { createToken } from "../utils/jwt.js";
 
 const router = Router();
 const sessionManager = new SessionManager();
@@ -17,7 +18,7 @@ router.post("/register", async (req, res) => {
       password,
       age,
     });
-    return res.status(response.status).json({ message: response.message });
+    return res.json({ status: response.status, message: response.message });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -38,8 +39,8 @@ router.post("/login", async (req, res) => {
         age: response.user.age,
         role: response.user.role,
       };
-      req.session.user = userInfo;
-      req.session.isLog = true;
+      const token = createToken(userInfo);
+      res.cookie("access_token", token, { maxAge: 60000, signed: true });
     }
     return res
       .status(response.status)
@@ -50,13 +51,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  req.session.destroy((error) => {
-    if (error) {
-      res.send(error);
-    } else {
-      res.send("Sesion destruida");
-    }
-  });
+  res.clearCookie("access_token");
 });
 
 export default router;

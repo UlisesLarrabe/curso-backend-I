@@ -1,6 +1,7 @@
 import { Router } from "express";
 import ProductManager from "../dao/db/product-manager-db.js";
 import CartManager from "../dao/db/cart-manager-db.js";
+import { decodeToken } from "../utils/jwt.js";
 
 const router = Router();
 const productManager = new ProductManager();
@@ -11,7 +12,9 @@ router.get("/realtimeproducts", async (req, res) => {
 });
 
 const isLogged = (req, res, next) => {
-  if (req.session.isLog) {
+  const user = decodeToken(req.signedCookies.access_token);
+  if (user) {
+    req.user = user.user;
     return next();
   }
   res.redirect("/login");
@@ -33,8 +36,8 @@ router.get("/home", isLogged, async (req, res) => {
     const newId = _id.toString();
     return { newId, ...rest };
   });
-  const username = req.session.user.first_name;
-  const isAdmin = req.session.user.role === "admin";
+  const username = req.user.first_name;
+  const isAdmin = req.user.role === "admin";
 
   res.render("home", {
     products: arrayDocs,
