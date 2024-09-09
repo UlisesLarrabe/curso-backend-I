@@ -1,6 +1,7 @@
 import { Router } from "express";
 import SessionManager from "../dao/db/session-manager.js";
 import { createToken } from "../utils/jwt.js";
+import { invokePassport } from "../middlewares/handleError.js";
 
 const router = Router();
 const sessionManager = new SessionManager();
@@ -52,6 +53,11 @@ router.post("/login", async (req, res) => {
 
 router.get("/logout", (req, res) => {
   res.clearCookie("access_token");
+});
+
+router.get("/current", invokePassport("current"), (req, res) => {
+  const user = req.user;
+  res.json({ user });
 });
 
 export default router;

@@ -2,6 +2,8 @@ import { Router } from "express";
 import ProductManager from "../dao/db/product-manager-db.js";
 import CartManager from "../dao/db/cart-manager-db.js";
 import { decodeToken } from "../utils/jwt.js";
+import passport from "passport";
+import { invokePassport } from "../middlewares/handleError.js";
 
 const router = Router();
 const productManager = new ProductManager();
@@ -11,16 +13,7 @@ router.get("/realtimeproducts", async (req, res) => {
   res.render("realTimeProducts");
 });
 
-const isLogged = (req, res, next) => {
-  const user = decodeToken(req.signedCookies.access_token);
-  if (user) {
-    req.user = user.user;
-    return next();
-  }
-  res.redirect("/login");
-};
-
-router.get("/home", isLogged, async (req, res) => {
+router.get("/home", invokePassport("current"), async (req, res) => {
   const page = req.query.page || 1;
   const limit = req.query.limit || 10;
   const sort = req.query.sort;

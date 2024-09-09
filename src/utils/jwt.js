@@ -9,3 +9,11 @@ export const decodeToken = (token) => {
   const decoded = jwt.verify(token, "palabrasupersecreta");
   return decoded;
 };
+
+export const getJWTCookie = (req) => {
+  let token = null;
+  if (req.signedCookies) {
+    token = req.signedCookies.access_token;
+  }
+  return token;
+};
