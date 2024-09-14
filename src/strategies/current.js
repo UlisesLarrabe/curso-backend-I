@@ -1,6 +1,7 @@
 import passport from "passport";
 import jwt, { ExtractJwt } from "passport-jwt";
 import { getJWTCookie } from "../utils/jwt.js";
+import UserModel from "../dao/models/user.model.js";
 
 const JWTStrategy = jwt.Strategy;
 
@@ -12,9 +13,15 @@ const initializePassport = () => {
         jwtFromRequest: ExtractJwt.fromExtractors([getJWTCookie]),
         secretOrKey: "palabrasupersecreta",
       },
-      (jwt_payload, done) => {
+      async (jwt_payload, done) => {
         try {
-          return done(null, jwt_payload.user);
+          const userFound = await UserModel.findOne({
+            email: jwt_payload.user.email,
+          })
+            .populate("cartId")
+            .lean();
+          if (!userFound) return done(null, false);
+          return done(null, userFound);
         } catch (error) {
           return done(error);
         }
