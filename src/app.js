@@ -6,10 +6,10 @@ import { Server } from "socket.io";
 import viewsRouter from "./routes/views.router.js";
 import "./database.js";
 import ProductManager from "./dao/db/product-manager-db.js";
-import sessionsRouter from "./routes/sessions.router.js";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import initializePassport from "./strategies/current.js";
+import routes from "./routes/index.js";
 
 const app = express();
 app.use(express.json());
@@ -29,7 +29,7 @@ app.use(cookieParser("palabrasupersecreta"));
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/", viewsRouter);
-app.use("/api/sessions", sessionsRouter);
+app.use("/", routes);
 
 const httpServer = app.listen(8080, () => {
   console.log("Listening in http://localhost:8080");

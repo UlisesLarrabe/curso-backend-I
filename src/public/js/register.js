@@ -27,7 +27,7 @@ function register() {
       return;
     }
     const user = { first_name, last_name, email, password, age };
-    fetch("/api/sessions/register", {
+    fetch("/api/users/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

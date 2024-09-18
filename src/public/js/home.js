@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const $btnLogout = document.getElementById("logout");
 $btnLogout.addEventListener("click", (e) => {
-  fetch("/api/sessions/logout", {
+  fetch("/api/users/logout", {
     method: "GET",
   })
     .then((response) => {

@@ -8,7 +8,7 @@ function login() {
     const email = $("email").value;
     const password = $("password").value;
     const data = { email, password };
-    fetch("/api/sessions/login", {
+    fetch("/api/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -17,11 +17,11 @@ function login() {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.status === 200) {
+        if (data.data.token) {
           window.location.href = "/home";
         } else {
           Toastify({
-            text: data.message,
+            text: "Credenciales invalidas",
             offset: {
               x: 50,
               y: 10,
