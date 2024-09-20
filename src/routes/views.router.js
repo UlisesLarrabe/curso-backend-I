@@ -1,12 +1,10 @@
 import { Router } from "express";
-import ProductManager from "../dao/db/product-manager-db.js";
 import CartManager from "../dao/db/cart-manager-db.js";
-import { decodeToken } from "../utils/jwt.js";
-import passport from "passport";
 import { invokePassport } from "../middlewares/handleError.js";
+import ProductService from "../services/product.services.js";
 
 const router = Router();
-const productManager = new ProductManager();
+const productManager = new ProductService();
 const cartManager = new CartManager();
 
 router.get("/realtimeproducts", async (req, res) => {
@@ -18,7 +16,7 @@ router.get("/home", invokePassport("current"), async (req, res) => {
   const limit = req.query.limit || 10;
   const sort = req.query.sort;
   const category = req.query.category;
-  const response = await productManager.getProducts(
+  const response = await productManager.getAllProducts(
     category,
     limit,
     page,
