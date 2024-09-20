@@ -38,7 +38,7 @@ export default class UserController extends Controllers {
       }
       //Le debo pasar el usuario en data
       const token = createToken(data);
-      res.cookie("access_token", token, { maxAge: 60000, signed: true });
+      res.cookie("access_token", token, { maxAge: 600000, signed: true });
       const json = { data, token };
       createResponse(res, 200, json);
     } catch (error) {

@@ -4,22 +4,42 @@ export default class Services {
   }
 
   async getAll() {
-    return await this.dao.getAll();
+    try {
+      return await this.dao.getAll();
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
   async getById(id) {
-    return await this.dao.getById(id);
+    try {
+      return await this.dao.getById(id);
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
   async create(obj) {
-    return await this.dao.create(obj);
+    try {
+      return await this.dao.create(obj);
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
   async update(id, obj) {
-    return await this.dao.update(id, obj);
+    try {
+      return await this.dao.update(id, obj);
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
   async delete(id) {
-    return await this.dao.delete(id);
+    try {
+      return await this.dao.delete(id);
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 }

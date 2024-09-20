@@ -18,6 +18,7 @@ export default class Controllers {
     try {
       const { id } = req.params;
       const item = await this.service.getById(id);
+      if (!item) return createResponse(res, 404, "Item not found");
       createResponse(res, 200, item);
     } catch (error) {
       next(error);

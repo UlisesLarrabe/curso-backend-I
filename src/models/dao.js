@@ -37,7 +37,11 @@ export default class MongoDao {
 
   async delete(id) {
     try {
-      return await this.model.findByIdAndDelete(id);
+      const deleted = await this.model.findByIdAndDelete(id);
+      if (!deleted) {
+        throw new Error("Item not found");
+      }
+      return deleted;
     } catch (error) {
       throw new Error(error);
     }
