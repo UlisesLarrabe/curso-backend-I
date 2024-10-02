@@ -6,12 +6,14 @@ import express from "express";
 import exphbs from "express-handlebars";
 import { Server } from "socket.io";
 import viewsRouter from "./routes/views.router.js";
-import "./database.js";
+import MongoSingleton from "./singleton/mongo.singleton.js";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import initializePassport from "./strategies/current.js";
 import routes from "./routes/index.js";
 import ProductService from "./services/product.services.js";
+
+new MongoSingleton();
 
 const app = express();
 app.use(express.json());
