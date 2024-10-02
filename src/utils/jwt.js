@@ -1,12 +1,15 @@
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const createToken = (user) => {
-  const token = jwt.sign({ user }, "palabrasupersecreta", { expiresIn: "1h" });
+  const token = jwt.sign({ user }, process.env.SECRET_KEY, { expiresIn: "1h" });
   return token;
 };
 
 export const decodeToken = (token) => {
-  const decoded = jwt.verify(token, "palabrasupersecreta");
+  const decoded = jwt.verify(token, process.env.SECRET_KEY);
   return decoded;
 };
 

@@ -2,6 +2,9 @@ import passport from "passport";
 import jwt, { ExtractJwt } from "passport-jwt";
 import { getJWTCookie } from "../utils/jwt.js";
 import UserModel from "../models/user.model.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const JWTStrategy = jwt.Strategy;
 
@@ -11,7 +14,7 @@ const initializePassport = () => {
     new JWTStrategy(
       {
         jwtFromRequest: ExtractJwt.fromExtractors([getJWTCookie]),
-        secretOrKey: "palabrasupersecreta",
+        secretOrKey: process.env.SECRET_KEY,
       },
       async (jwt_payload, done) => {
         try {

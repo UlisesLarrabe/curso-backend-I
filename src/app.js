@@ -1,3 +1,7 @@
+import dotenv from "dotenv";
+
+dotenv.config();
+
 import express from "express";
 import cartsRouter from "./routes/carts.router.js";
 import exphbs from "express-handlebars";
@@ -24,7 +28,7 @@ app.set("views", "src/views");
 
 initializePassport();
 app.use(passport.initialize());
-app.use(cookieParser("palabrasupersecreta"));
+app.use(cookieParser(process.env.SECRET_KEY));
 app.use("/api/carts", cartsRouter);
 app.use("/", viewsRouter);
 app.use("/", routes);

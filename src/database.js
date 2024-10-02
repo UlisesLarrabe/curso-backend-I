@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 mongoose
-  .connect(
-    "mongodb+srv://Alejandrou:ulises2004@cluster0.pgv74zu.mongodb.net/e-commerce?retryWrites=true&w=majority&appName=Cluster0"
-  )
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("DB connected");
   })
