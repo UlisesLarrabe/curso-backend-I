@@ -1,3 +1,4 @@
+import { UserDTO } from "../dto/user.dto.js";
 import UserService from "../services/user.services.js";
 import { createResponse } from "../utils/createResponse.js";
 import { createToken } from "../utils/jwt.js";
@@ -52,7 +53,7 @@ export default class UserController extends Controllers {
   };
 
   getCurrent = async (req, res, next) => {
-    const user = req.user;
+    const user = new UserDTO(req.user);
     res.json({ user });
   };
 }
