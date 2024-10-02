@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express from "express";
-import cartsRouter from "./routes/carts.router.js";
 import exphbs from "express-handlebars";
 import { Server } from "socket.io";
 import viewsRouter from "./routes/views.router.js";
@@ -29,7 +28,6 @@ app.set("views", "src/views");
 initializePassport();
 app.use(passport.initialize());
 app.use(cookieParser(process.env.SECRET_KEY));
-app.use("/api/carts", cartsRouter);
 app.use("/", viewsRouter);
 app.use("/", routes);
 

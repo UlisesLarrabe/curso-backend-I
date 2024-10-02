@@ -15,7 +15,7 @@ export default class ProductService extends Services {
         page,
         sort: sort ? { price: sort } : {},
       };
-      const data = await productDao.paginate(query, options);
+      const data = await this.dao.paginate(query, options);
       let products = data.docs.map((product) => {
         const { _id, ...rest } = product;
         return rest;
@@ -41,12 +41,12 @@ export default class ProductService extends Services {
       ) {
         throw new Error("All fields are necessary");
       }
-      const productWithSameCode = await productDao.getByCode(code);
+      const productWithSameCode = await this.dao.getByCode(code);
 
       if (productWithSameCode) {
         throw new Error("Product already exists");
       }
-      const data = await productDao.create(product);
+      const data = await this.dao.create(product);
       return data;
     } catch (error) {
       throw new Error(error);

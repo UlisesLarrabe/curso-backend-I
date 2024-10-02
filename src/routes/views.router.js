@@ -1,11 +1,12 @@
 import { Router } from "express";
-import CartManager from "../dao/db/cart-manager-db.js";
+
 import { invokePassport } from "../middlewares/handleError.js";
 import ProductService from "../services/product.services.js";
+import CartService from "../services/cart.services.js";
 
 const router = Router();
 const productManager = new ProductService();
-const cartManager = new CartManager();
+const cartManager = new CartService();
 
 router.get("/realtimeproducts", async (req, res) => {
   res.render("realTimeProducts");
