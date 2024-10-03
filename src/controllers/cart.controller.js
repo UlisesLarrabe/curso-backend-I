@@ -104,4 +104,17 @@ export default class CartController extends Controllers {
       next(error);
     }
   };
+
+  purchase = async (req, res, next) => {
+    try {
+      const { cid } = req.params;
+      const { email } = req.user;
+      const response = await this.service.endPurchaseOfCart(cid, email);
+      if (!response)
+        return createResponse(res, 400, "Could not complete the purchase");
+      return createResponse(res, 200, response);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
