@@ -24,5 +24,6 @@ export default class CartRouterCustom extends CustomRouter {
       ["USER"],
       cartController.updateProductQuantity
     );
+    this.post("/:cid/purchase", ["USER"], cartController.purchase);
   }
 }
