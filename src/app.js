@@ -32,6 +32,9 @@ app.use(passport.initialize());
 app.use(cookieParser(process.env.SECRET_KEY));
 app.use("/", viewsRouter);
 app.use("/", routes);
+app.get("*", (req, res) => {
+  res.status(404).json({ message: "Endpoint not found" });
+});
 
 const httpServer = app.listen(8080, () => {
   console.log("Listening in http://localhost:8080");
