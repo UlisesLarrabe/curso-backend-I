@@ -1,10 +1,10 @@
 import ProductAccessmongo from "../models/product.dao.js";
 import Services from "./services.js";
+import { ProductDao } from "../persistence/factory.js";
 
-const productDao = new ProductAccessmongo();
 export default class ProductService extends Services {
   constructor() {
-    super(productDao);
+    super(ProductDao);
   }
 
   getAllProducts = async (category, limit, page, sort) => {
